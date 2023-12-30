@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import '../db/events.dart';
 
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({Key? key}) : super(key: key);
@@ -84,6 +85,13 @@ class _CreateEventPageState extends State<CreateEventPage> {
                         print('name: ${descriptionController.text}');
                         print('Form submitted successfully!');
                         // ok ok heat firesto'
+                        Event newEvent = Event(
+                          title: nameController.text,
+                          date: dateController.text,
+                          location: locationController.text,
+                          description: descriptionController.text,
+                        );
+                        events.add(newEvent);
                       }
                     }),
                     // const SizedBox(height: 8),

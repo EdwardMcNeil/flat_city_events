@@ -1,272 +1,66 @@
 import 'package:flutter/material.dart';
-import 'create_event_page.dart';
+import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'db/events.dart';
+import 'package:logger/logger.dart';
+import 'widgets/theme_switcher.dart';
+import 'widgets/user_icon.dart';
+import 'pages/event_list_page.dart';
 
-class Event {
-  final String title;
-  final String date;
-  final String location;
-  final String description;
-  final String imageUrl;
+var logger = Logger(level: Level.warning);
 
-  const Event({
-    required this.title,
-    required this.date,
-    required this.location,
-    required this.description,
-    required this.imageUrl,
-  });
+void main() async {
+  runApp(const MaterialApp(
+    home: EventsListPage(),
+  ));
+  // -- runApp(MultiProvider(
+  // --   providers: [
+  // --     ChangeNotifierProvider<ApplicationState>(
+  // --         create: (_) => applicationStateInitializer.model),
+  // --   ],
+  // --   builder: ((context, _) => const MaterialApp(home: EventsListPage())),
+  // -- ));
 }
 
-class EventsList extends StatefulWidget {
-  const EventsList({super.key});
-
-  @override
-  State<EventsList> createState() => _EventsListState();
-}
-
-class _EventsListState extends State<EventsList> {
-  final List<Event> events = [
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Community Hackathon',
-      date: '2023-11-25',
-      location: 'Flutter HQ, San Francisco',
-      description:
-          'Join us for a day of hacking and learning with fellow Flutter developers.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Meetup',
-      date: '2023-12-02',
-      location: 'Google Cloud Office, New York',
-      description:
-          'Come network with other Flutter enthusiasts and learn about the latest developments.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-    Event(
-      title: 'Flutter Workshop',
-      date: '2023-12-09',
-      location: 'Amazon Web Services Office, Seattle',
-      description:
-          'Get hands-on experience with Flutter in this beginner-friendly workshop.',
-      imageUrl: 'https://via.placeholder.com/300x200',
-    ),
-  ];
-
+class FlatCity extends StatelessWidget {
+  const FlatCity({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flathead County Community Events'),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CreateEventPage(),
-                ),
-              );
-            },
-            child: const Text('Add Event'),
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: events.length,
-        itemBuilder: (context, index) {
-          final event = events[index];
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    event.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text('Date: ${event.date}'),
-                  const SizedBox(height: 8),
-                  Text('Location: ${event.location}'),
-                  const SizedBox(height: 8),
-                  Text(event.description),
-                  const SizedBox(height: 8),
-                  // -- event.imageUrl.isNotEmpty
-                  // --     ? Image.network(event.imageUrl)
-                  // --     : const Text('')
-                ],
-              ),
+    final ThemeData lightTheme = ThemeData(
+      brightness: Brightness.light,
+      primaryColor: Colors.blue,
+    );
+    final ThemeData darkTheme = ThemeData(
+      brightness: Brightness.dark,
+      primaryColor: Colors.grey,
+    );
+    final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ),
+      ],
+      child: Consumer<ThemeProvider>(
+        child: const EventsListPage(),
+        builder: (c, themeProvider, child) {
+          return MaterialApp.router(
+            routerConfig: getRoute(),
+            scaffoldMessengerKey: scaffoldKey,
+            debugShowCheckedModeBanner: false,
+            themeMode: themeProvider.selectedThemeMode,
+            theme: ThemeData(
+              brightness: Brightness.light,
+              primarySwatch: AppColors.getMaterialColorFromColor(
+                  themeProvider.selectedPrimaryColor),
+              primaryColor: themeProvider.selectedPrimaryColor,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: AppColors.getMaterialColorFromColor(
+                  themeProvider.selectedPrimaryColor),
+              primaryColor: themeProvider.selectedPrimaryColor,
             ),
           );
         },
@@ -275,8 +69,293 @@ class _EventsListState extends State<EventsList> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: EventsList(),
-  ));
+// routes down here ...
+
+GoRouter getRoute() {
+  final appRouter = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const EventsListPage(),
+        routes: [
+          GoRoute(
+            path: 'sign-in',
+            builder: (context, state) {
+              return SignInScreen(
+                headerBuilder: (context, constraints, _) {
+                  return AppBar(title: const Text('Profile'));
+                },
+                actions: [
+                  ForgotPasswordAction(((context, email) {
+                    final uri = Uri(
+                      path: '/sign-in/forgot-password',
+                      queryParameters: <String, String?>{
+                        'email': email,
+                      },
+                    );
+                    context.push(uri.toString());
+                  })),
+                  AuthStateChangeAction(((context, state) {
+                    final user = switch (state) {
+                      SignedIn state => state.user,
+                      UserCreated state => state.credential.user,
+                      _ => null
+                    };
+                    if (user == null) {
+                      return;
+                    }
+                    if (state is UserCreated) {
+                      user.updateDisplayName(user.email!.split('@')[0]);
+                    }
+                    if (!user.emailVerified) {
+                      user.sendEmailVerification();
+                      const snackBar = SnackBar(
+                          content: Text(
+                              'Please check your email to verify your email address'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else {
+                      // user is authenticated
+                      logger.d('fully authenticated user: $user');
+                    }
+                    context.pushReplacement('/');
+                  })),
+                ],
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'forgot-password',
+                builder: (context, state) {
+                  final arguments = state.uri.queryParameters;
+                  return ForgotPasswordScreen(
+                    email: arguments['email'],
+                    headerMaxExtent: 200,
+                    headerBuilder: (context, constraints, _) {
+                      return Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.asset('assets/Image.png',
+                              alignment: Alignment.bottomCenter),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: 'profile',
+            builder: (context, state) {
+              return Consumer2<ApplicationState, ThemeProvider>(
+                  builder: (context, appState, theme, _) {
+                String userId = appState.getInitialForCurrentUser();
+                Widget userIcon = UserCircleIcon(
+                  userName: userId,
+                  backgroundColor: theme.selectedPrimaryColor,
+                  size: 100,
+                );
+                return ProfileScreen(
+                  key: ValueKey(appState.emailVerified),
+                  avatar: userIcon,
+                  avatarShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(102),
+                  ),
+                  avatarPlaceholderColor: theme.selectedPrimaryColor,
+                  providers: const [],
+                  appBar: AppBar(
+                    title: const Text('profile 2'),
+                  ),
+                  actions: [
+                    SignedOutAction(((context) {
+                      context.pushReplacement('/');
+                    })),
+                  ],
+                  children: [
+                    Visibility(
+                        visible: !appState.emailVerified,
+                        child: OutlinedButton(
+                          child: const Text('Recheck Verification State'),
+                          onPressed: () {
+                            appState.refreshLoggedInUser();
+                          },
+                        )),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 17),
+                        //width: _containerWidth,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text('Theme'),
+                            ),
+                            ThemeSwitcher(),
+                            // -- const Padding(
+                            // --   padding: EdgeInsets.symmetric(vertical: 10),
+                            // --   child: Text('Primary Color'),
+                            // -- ),
+                            // -- PrimaryColorSwitcher(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              });
+            },
+          ),
+          // -- GoRoute(
+          // --   path: 'photo',
+          // --   builder: (context, state) {
+          // --     return Consumer<ApplicationState>(
+          // --       builder: (context, appState, _) => CameraPage(
+          // --         key: ValueKey(appState.emailVerified),
+          // --         loggedIn: appState.loggedIn,
+          // --         isAdmin: appState.userIsAdmin,
+          // --       ),
+          // --     );
+          // --   },
+          // -- ),
+          // -- GoRoute(
+          // --   path: 'info',
+          // --   builder: (context, state) {
+          // --     return Consumer<ApplicationState>(
+          // --       builder: (context, appState, _) => Info(
+          // --         key: ValueKey(appState.emailVerified),
+          // --         uri: GoRouterState.of(context)
+          // --             .matchedLocation, // .uri.toString()
+          // --       ),
+          // --     );
+          // --   },
+          // -- ),
+          // -- GoRoute(
+          // --     path: 'warehouse',
+          // --     builder: (context, state) {
+          // --       return Consumer<ApplicationState>(
+          // --         builder: (context, appState, _) => const NeuesItemsPage(
+          // --             isAdmin: false), // const WarehousePage(),
+          // --       );
+          // --     },
+          // --     routes: [
+          // --       GoRoute(
+          // --         path: 'detail',
+          // --         builder: (context, state) {
+          // --           return Consumer2<ApplicationState, ItemStore>(
+          // --             builder: (context, appState, itemState, _) =>
+          // --                 ItemDetailPage(
+          // --                     docID: itemState.currentItem?.id ?? 'bogoindian',
+          // --                     itemName: itemState.currentItem?.name ?? 'dunno'),
+          // --           );
+          // --         },
+          // --       ),
+          // --     ]),
+          // -- GoRoute(
+          // --   path: 'bigboard',
+          // --   builder: (context, state) {
+          // --     return Consumer<ApplicationState>(
+          // --       builder: (context, appState, _) => BigBoardPage(),
+          // --     );
+          // --   },
+          // -- ),
+          // -- // GoRoute(
+          // -- //     path: 'favorites',
+          // -- //     builder: (context, state) {
+          // -- //       return Consumer<ApplicationState>(
+          // -- //         builder: (context, appState, _) =>
+          // -- //             const FlexItemsPage(), //FavoritesPage(), // ScrollNotificationDemo(), // const FavoritesPage(),
+          // -- //       );
+          // -- //     }),
+          // -- GoRoute(
+          // --     path: 'favorites',
+          // --     builder: (context, state) {
+          // --       return Consumer<ApplicationState>(
+          // --         builder: (context, appState, _) => ItemsPage(
+          // --             isAdmin: false,
+          // --             userId: appState
+          // --                 .getInitialForCurrentUser()), // const WarehousePage(),
+          // --       );
+          // --     },
+          // --     routes: [
+          // --       GoRoute(
+          // --         path: 'detail',
+          // --         builder: (context, state) {
+          // --           return Consumer2<ApplicationState, ItemStore>(
+          // --             builder: (context, appState, itemState, _) =>
+          // --                 ItemDetailPage(
+          // --                     docID: itemState.currentItem?.id ?? 'bogoindian',
+          // --                     itemName: itemState.currentItem?.name ?? 'dunno'),
+          // --           );
+          // --         },
+          // --       ),
+          // --     ]),
+          // -- GoRoute(
+          // --     path: 'chat',
+          // --     builder: (context, state) {
+          // --       return Consumer2<ApplicationState, GuestBookMessageStore>(
+          // --         builder: (context, appState, guestState, _) {
+          // --           return const ChatPage();
+          // --         },
+          // --       );
+          // --     }),
+          // -- GoRoute(
+          // --     path: 'account',
+          // --     builder: (context, state) {
+          // --       return Consumer<ApplicationState>(
+          // --         builder: (context, appState, _) => const AccountPage(),
+          // --       );
+          // --     }),
+          // -- GoRoute(
+          // --   path: 'admin',
+          // --   builder: (context, state) {
+          // --     return Consumer2<ApplicationState, ItemStore>(
+          // --       builder: (context, appState, itemState, _) =>
+          // --           const NeuesItemsPage(
+          // --               isAdmin: true), // const WarehousePage(),
+          // --     );
+          // --   },
+          // --   routes: [
+          // --     GoRoute(
+          // --       path: 'item',
+          // --       builder: (context, state) {
+          // --         return Consumer2<ApplicationState, ItemStore>(
+          // --           builder: (context, appState, itemState, _) =>
+          // --               const AddItemPage(),
+          // --         );
+          // --       },
+          // --     ),
+          // --     GoRoute(
+          // --         path: 'photo',
+          // --         builder: (context, state) {
+          // --           return Consumer<ApplicationState>(
+          // --             // KAIZA: probably do not need bools since this is under admin route only
+          // --             builder: (context, appState, _) => CameraPage(
+          // --               key: ValueKey(appState.emailVerified),
+          // --               loggedIn: appState.loggedIn,
+          // --               isAdmin: appState.userIsAdmin,
+          // --             ),
+          // --           );
+          // --         }),
+          // --     GoRoute(
+          // --       path: 'detail',
+          // --       builder: (context, state) {
+          // --         return Consumer2<ApplicationState, ItemStore>(
+          // --           builder: (context, appState, itemState, _) =>
+          // --               ItemDetailPage(
+          // --                   docID: itemState.currentItem?.id ?? 'bogoindian',
+          // --                   itemName: itemState.currentItem?.name ?? 'dunno'),
+          // --         );
+          // --       },
+          // --     ),
+          // --   ],
+          // -- ),
+        ],
+      ),
+    ],
+  );
+  return appRouter;
 }
