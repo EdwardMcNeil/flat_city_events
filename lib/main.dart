@@ -7,17 +7,17 @@ import 'package:logger/logger.dart';
 import 'widgets/theme_switcher.dart';
 import 'widgets/user_icon.dart';
 import 'pages/event_list_page.dart';
+import 'pages/create_event_page.dart';
 
 var logger = Logger(level: Level.warning);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await myAppState.init().then((m) {
-    logger.w('here is our model: ${myAppState.model.iAmInitialized}');
-    runApp(const MaterialApp(
-      home: EventsListPage(),
-    ));
-  });
+    await myAppState.init().then((m) {
+      logger.w('here is our model: ${myAppState.model.iAmInitialized}');
+      runApp(const FlatCity());
+    });
+  }
 
   // -- runApp(MultiProvider(
   // --   providers: [
@@ -26,6 +26,17 @@ void main() async {
   // --   ],
   // --   builder: ((context, _) => const MaterialApp(home: EventsListPage())),
   // -- ));
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: getRoute(),
+    );
+  }
+
 }
 
 class FlatCity extends StatelessWidget {
@@ -43,6 +54,7 @@ class FlatCity extends StatelessWidget {
     final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => myAppState.model),
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
         ),
@@ -214,6 +226,11 @@ GoRouter getRoute() {
               });
             },
           ),
+          GoRoute(
+            path: 'add',
+            builder: (context, state) => const CreateEventPage(),
+          ),
+          // -- ),
           // -- GoRoute(
           // --   path: 'photo',
           // --   builder: (context, state) {
