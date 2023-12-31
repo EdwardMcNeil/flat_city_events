@@ -14,7 +14,7 @@ var logger = Logger(level: Level.warning);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
     await myAppState.init().then((m) {
-      logger.w('here is our model: ${myAppState.model.iAmInitialized}');
+      logger.d('here is our model: ${myAppState.model.iAmInitialized}');
       runApp(const FlatCity());
     });
   }

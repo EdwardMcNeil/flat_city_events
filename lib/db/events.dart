@@ -7,9 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 //import 'dart.io';
 import 'package:logger/logger.dart';
-import '../pages/create_event_page.dart';
 
-var logger = Logger(level: Level.debug);
+var logger = Logger(level: Level.warning);
 
 class MyApplicationStateInitializer {
   late ApplicationState model;
@@ -21,7 +20,7 @@ class MyApplicationStateInitializer {
     );
     logger.d('do rest app');
     await x.initDb().then((m) {
-      logger.w('we is dawn init db');
+      logger.d('we is dawn init db');
       model = m;
 
       // return m;
@@ -115,7 +114,7 @@ class Event {
 List<Event> events = [
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -123,7 +122,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -131,7 +130,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -139,7 +138,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -147,7 +146,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -155,7 +154,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -163,7 +162,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -171,7 +170,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -179,7 +178,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -187,7 +186,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -195,7 +194,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -203,7 +202,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -211,7 +210,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -219,7 +218,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -227,7 +226,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -235,7 +234,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -243,7 +242,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -251,7 +250,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -259,7 +258,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -267,7 +266,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -275,7 +274,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',
@@ -283,7 +282,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Community Hackathon',
-    date: '2023-11-25',
+    date: '2024-11-25',
     location: 'Flutter HQ, San Francisco',
     description:
         'Join us for a day of hacking and learning with fellow Flutter developers.',
@@ -291,7 +290,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Meetup',
-    date: '2023-12-02',
+    date: '2024-12-02',
     location: 'Google Cloud Office, New York',
     description:
         'Come network with other Flutter enthusiasts and learn about the latest developments.',
@@ -299,7 +298,7 @@ List<Event> events = [
   ),
   Event(
     title: 'Flutter Workshop',
-    date: '2023-12-09',
+    date: '2024-12-09',
     location: 'Amazon Web Services Office, Seattle',
     description:
         'Get hands-on experience with Flutter in this beginner-friendly workshop.',

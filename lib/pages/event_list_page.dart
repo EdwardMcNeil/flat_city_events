@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../db/events.dart';
-import '../pages/create_event_page.dart';
 import 'package:logger/logger.dart';
-import 'package:firebase_auth/firebase_auth.dart'
-    hide EmailAuthProvider, PhoneAuthProvider;
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-import '../widgets/authentication.dart';
-import '../widgets/auth_widgets.dart';
+
 
 var logger = Logger(level: Level.warning);
 
@@ -33,7 +28,7 @@ class _EventsListPageState extends State<EventsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    logger.w(
+    logger.d(
         'app state model userVerified returns: ${myAppState.model.userVerified()}');
     return Scaffold(
       appBar: AppBar(
