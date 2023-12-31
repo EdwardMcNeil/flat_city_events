@@ -9,19 +9,39 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:logger/logger.dart';
 import '../pages/create_event_page.dart';
 
-var logger = Logger(level: Level.warning);
+var logger = Logger(level: Level.debug);
+
+class MyApplicationStateInitializer {
+  late ApplicationState model;
+  Future<ApplicationState> init() async {
+    ApplicationState x = ApplicationState();
+    logger.d('waiting for init app');
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    logger.d('do rest app');
+    await x.initDb().then((m) {
+      logger.w('we is dawn init db');
+      model = m;
+
+      // return m;
+    });
+    return model;
+  }
+}
+
+MyApplicationStateInitializer myAppState = MyApplicationStateInitializer();
 
 class ApplicationState extends ChangeNotifier {
   ApplicationState() {}
   bool loggedIn = false;
   bool emailVerified = false;
   bool userIsAdmin = false;
+  bool iAmInitialized = false;
   String userId = '';
   Future<ApplicationState> initDb() async {
     logger.d('Heloghewo');
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+
     FirebaseUIAuth.configureProviders([
       EmailAuthProvider(),
     ]);
@@ -36,6 +56,7 @@ class ApplicationState extends ChangeNotifier {
           }
         }
       }
+      iAmInitialized = true;
       notifyListeners();
     });
     return this;
@@ -68,6 +89,10 @@ class ApplicationState extends ChangeNotifier {
     userId = currentUser.uid;
     setUserRole();
     logger.d('user role is admin: $userIsAdmin');
+  }
+
+  bool userVerified() {
+    return loggedIn && emailVerified;
   }
 } // end ApplicationState
 

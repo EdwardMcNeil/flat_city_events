@@ -11,9 +11,14 @@ import 'pages/event_list_page.dart';
 var logger = Logger(level: Level.warning);
 
 void main() async {
-  runApp(const MaterialApp(
-    home: EventsListPage(),
-  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  await myAppState.init().then((m) {
+    logger.w('here is our model: ${myAppState.model.iAmInitialized}');
+    runApp(const MaterialApp(
+      home: EventsListPage(),
+    ));
+  });
+
   // -- runApp(MultiProvider(
   // --   providers: [
   // --     ChangeNotifierProvider<ApplicationState>(

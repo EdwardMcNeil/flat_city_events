@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../db/events.dart';
 import '../pages/create_event_page.dart';
 import 'package:logger/logger.dart';
+import 'package:firebase_auth/firebase_auth.dart'
+    hide EmailAuthProvider, PhoneAuthProvider;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import '../widgets/authentication.dart';
+import '../widgets/auth_widgets.dart';
 
 var logger = Logger(level: Level.warning);
-
-class MyApplicationStateInitializer {
-  late ApplicationState model;
-  Future<ApplicationState> init() async {
-    ApplicationState x = ApplicationState();
-    model = await x.initDb();
-    return model;
-  }
-}
 
 class EventsListPage extends StatefulWidget {
   const EventsListPage({super.key});
@@ -28,26 +25,88 @@ class _EventsListPageState extends State<EventsListPage> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    applicationStateInitializer.init();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   logger.w('in init state');
+  // }
 
   @override
   Widget build(BuildContext context) {
+    logger.w(
+        'app state model userVerified returns: ${myAppState.model.userVerified()}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flathead County Community Events'),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CreateEventPage(),
-                ),
-              );
-            },
-            child: const Text('Add Event'),
+          Visibility(
+            visible: myAppState.model.userVerified(),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CreateEventPage(),
+                  ),
+                );
+              },
+              child: const Text('Add Event'),
+            ),
+          ),
+          Visibility(
+            visible: !myAppState.model.userVerified(),
+            child: ElevatedButton(
+              onPressed: () {
+                // context.push('/sign-in');
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SignInScreen(
+                        headerBuilder: (context, constraints, _) {
+                          return AppBar(title: const Text('Profile'));
+                        },
+                        actions: [
+                          ForgotPasswordAction(((context, email) {
+                            final uri = Uri(
+                              path: '/sign-in/forgot-password',
+                              queryParameters: <String, String?>{
+                                'email': email,
+                              },
+                            );
+                            context.push(uri.toString());
+                          })),
+                          AuthStateChangeAction(((context, state) {
+                            final user = switch (state) {
+                              SignedIn state => state.user,
+                              UserCreated state => state.credential.user,
+                              _ => null
+                            };
+                            if (user == null) {
+                              return;
+                            }
+                            if (state is UserCreated) {
+                              user.updateDisplayName(user.email!.split('@')[0]);
+                            }
+                            if (!user.emailVerified) {
+                              user.sendEmailVerification();
+                              const snackBar = SnackBar(
+                                  content: Text(
+                                      'Please check your email to verify your email address'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } else {
+                              // user is authenticated
+                              logger.d('fully authenticated user: $user');
+                            }
+                            // KAIZA context.pushReplacement('/');
+                          })),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
+              child: const Text('Sign In'),
+            ),
           ),
         ],
       ),
