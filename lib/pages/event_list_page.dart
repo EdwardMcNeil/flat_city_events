@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import '../db/events.dart';
 import 'package:logger/logger.dart';
 
-
 var logger = Logger(level: Level.warning);
 
 class EventsListPage extends StatefulWidget {
@@ -53,13 +52,13 @@ class _EventsListPageState extends State<EventsListPage> {
               //child: const Text('Add Event'),
               child: const Icon(Icons.verified_user),
             ),
-          ),          
+          ),
           Visibility(
             visible: !myAppState.model.userVerified(),
             child: ElevatedButton(
               onPressed: () {
                 context.push('/sign-in');
-               },
+              },
               child: const Text('Sign In'),
             ),
           ),
